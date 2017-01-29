@@ -3,6 +3,7 @@ package com.service;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import com.model.Book;
 @SessionScoped
 public class BookServiceImpl implements BookService {
 
+	@ManagedProperty(value = "#{bookDaoRepo}")
 	private BookDao bookDao;
 
 	public void setBookDao(BookDao bookDao) {

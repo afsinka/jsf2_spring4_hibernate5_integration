@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
@@ -14,11 +13,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.dao.BookDao;
-import com.dao.BookDaoImpl;
 import com.model.Book;
-import com.service.BookService;
-import com.service.BookServiceImpl;
 
 @EnableTransactionManagement
 @PropertySources({ @PropertySource("classpath:db.properties") })
@@ -66,17 +61,4 @@ public class AppConfig {
 		return htm;
 	}
 
-	@Bean
-	public BookDao bookDao() {
-		BookDao bookDao = new BookDaoImpl();
-		((BookDaoImpl) bookDao).setSessionFactory(customSessionFactory().getObject());
-		return bookDao;
-	}
-
-	@Bean
-	public BookService bookService() {
-		BookService bookService = new BookServiceImpl();
-		((BookServiceImpl) bookService).setBookDao(bookDao());
-		return bookService;
-	}
 }

@@ -7,19 +7,20 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Book;
 
-@Repository
+@Transactional
+@Repository("bookDaoRepo")
 public class BookDaoImpl implements BookDao {
 
+	@Autowired
 	private SessionFactory sessionFactory;
-	private static final Logger logger = LogManager.getLogger(BookDaoImpl.class);
 
-	public void setSessionFactory(SessionFactory sf) {
-		sessionFactory = sf;
-	}
+	private static final Logger logger = LogManager.getLogger(BookDaoImpl.class);
 
 	@Override
 	public void addBook(Book book) {
