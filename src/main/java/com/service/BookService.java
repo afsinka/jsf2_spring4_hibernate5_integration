@@ -2,14 +2,32 @@ package com.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.model.Book;
+import com.repository.BookRepository;
 
-public interface BookService {
+@Service
+public class BookService {
 
-	public void addBook(Book book);
+	@Autowired
+	private BookRepository bookRepository;
 
-	public List<Book> listBooks();
+	@Transactional
+	public void addBook(Book book) {
+		bookRepository.save(book);
+	}
 
-	public boolean isEmpty();
+	@Transactional
+	public List<Book> listBooks() {
+		return bookRepository.findAll();
+	}
+
+	@Transactional
+	public boolean isEmpty() {
+		return bookRepository.findAll().isEmpty();
+	}
 
 }

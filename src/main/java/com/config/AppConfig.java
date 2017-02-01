@@ -1,22 +1,29 @@
 package com.config;
 
+import java.beans.PropertyVetoException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import com.model.Book;
 
 @EnableTransactionManagement
 @PropertySources({ @PropertySource("classpath:db.properties") })
+@ComponentScan(basePackages = {"com"}) 
+@EnableJpaRepositories(basePackages = "com.repository") 
 @Configuration
 public class AppConfig {
 
@@ -36,29 +43,35 @@ public class AppConfig {
 	}
 
 	@Bean
-	public LocalSessionFactoryBean customSessionFactory() {
-		LocalSessionFactoryBean sf = new LocalSessionFactoryBean();
-		sf.setDataSource(dataSource());
-		sf.setAnnotatedClasses(Book.class);
-		sf.setHibernateProperties(hibernateProperties());
-		return sf;
-
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws PropertyVetoException {
+		final LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+		localContainerEntityManagerFactoryBean.setDataSource(dataSource());
+		localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+		localContainerEntityManagerFactoryBean.setJpaDialect(new HibernateJpaDialect());
+		localContainerEntityManagerFactoryBean.setPackagesToScan("com.model");
+		localContainerEntityManagerFactoryBean.setJpaPropertyMap(getJpaPropertyMap());
+		return localContainerEntityManagerFactoryBean;
 	}
 
 	@Bean
-	public Properties hibernateProperties() {
-		Properties p = new Properties();
-		p.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
-		p.put("hibernate.show_sql", false);
-		p.put("hibernate.hbm2ddl.auto", "update");
-		return p;
+	public JpaTransactionManager transactionManager() throws PropertyVetoException {
+		return new JpaTransactionManager(entityManagerFactory().getObject());
 	}
 
-	@Bean
-	public HibernateTransactionManager transactionManager() {
-		HibernateTransactionManager htm = new HibernateTransactionManager();
-		htm.setSessionFactory(customSessionFactory().getObject());
-		return htm;
+	private Map<String, Object> getJpaPropertyMap() {
+		final Map<String, Object> jpaPropertyMap = new HashMap<>();
+		jpaPropertyMap.put("hibernate.hbm2ddl.auto", "update");
+		jpaPropertyMap.put("hibernate.show_sql", true);
+		jpaPropertyMap.put("hibernate.format_sql", true);
+		jpaPropertyMap.put("hibernate.generate_statistics", false);
+		jpaPropertyMap.put("hibernate.max_fetch_depth", 0);
+		jpaPropertyMap.put("hibernate.default_batch_fetch_size", "10");
+		jpaPropertyMap.put("hibernate.jdbc.fetch_size", "10");
+		// jpaPropertyMap.put("hibernate.jdbc.factory_class", "");
+		jpaPropertyMap.put("hibernate.cache.use_query_cache", "false");
+		jpaPropertyMap.put("hibernate.cache.use_second_level_cache", "false");
+		// jpaPropertyMap.put(AvailableSettings.INTERCEPTOR, "");
+		jpaPropertyMap.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		return jpaPropertyMap;
 	}
-
 }

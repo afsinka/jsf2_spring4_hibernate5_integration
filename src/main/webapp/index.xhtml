@@ -26,7 +26,7 @@
 			</tr>
 			<tr>
 				<td colspan="2"><h:commandButton
-						action="#{bookService.addBook(book)}" value="Add"></h:commandButton>
+						action="#{bookView.addBook(book)}" value="Add"></h:commandButton>
 				</td>
 			</tr>
 		</table>
@@ -35,14 +35,14 @@
 	<br />
 
 	<h3>Books</h3>
-	<c:if test="${!bookService.isEmpty()}">
+	<c:if test="${!bookView.isEmpty()}">
 		<table class="tg">
 			<tr>
 				<th width="80">ID</th>
 				<th width="120">Name</th>
 				<th width="120">Author</th>
 			</tr>
-			<ui:repeat value="${bookService.listBooks()}" var="book">
+			<ui:repeat value="${bookView.listBooks()}" var="book">
 				<tr>
 					<td>${book.id}</td>
 					<td>${book.name}</td>
