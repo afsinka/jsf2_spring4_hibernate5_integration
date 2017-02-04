@@ -3,7 +3,6 @@ package com.config;
 import java.beans.PropertyVetoException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +19,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @PropertySources({ @PropertySource("classpath:db.properties") })
 @ComponentScan(basePackages = {"com"}) 
 @EnableJpaRepositories(basePackages = "com.repository") 

@@ -1,33 +1,21 @@
 package com.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Book;
 import com.repository.BookRepository;
 
 @Service
-public class BookService {
+public class BookService extends AbstractService<Book> {
 
 	@Autowired
-	private BookRepository bookRepository;
+	private BookRepository repository;
 
-	@Transactional
-	public void addBook(Book book) {
-		bookRepository.save(book);
-	}
-
-	@Transactional
-	public List<Book> listBooks() {
-		return bookRepository.findAll();
-	}
-
-	@Transactional
-	public boolean isEmpty() {
-		return bookRepository.findAll().isEmpty();
+	@Override
+	protected JpaRepository<Book, Long> getRepository() {
+		return repository;
 	}
 
 }
