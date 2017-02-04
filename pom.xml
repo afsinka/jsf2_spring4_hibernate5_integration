@@ -5,120 +5,169 @@
 	<artifactId>SpringData_Test2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+
+
+	<properties>
+
+		<log4j2.version>2.5</log4j2.version>
+		<hibernate.version>5.1.0.Final</hibernate.version>
+		<jsf.version>2.2.10</jsf.version>
+		<jstl.version>1.2</jstl.version>
+		<javax.servlet.version>3.0.1</javax.servlet.version>
+		<spring.version>4.2.2.RELEASE</spring.version>
+		<spring.data.version>1.11.0.RELEASE</spring.data.version>
+		<mysql.version>5.1.6</mysql.version>
+		<apache.commons.version>4.1</apache.commons.version>
+
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<jetty.port>9091</jetty.port>
+			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/test</directory>
+					</resource>
+				</resources>
+			</build>
+
+		</profile>
+
+		<profile>
+			<id>production</id>
+			<properties>
+				<jetty.port>9094</jetty.port>
+			</properties>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources/production</directory>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+
+
+	</profiles>
+
 	<dependencies>
-	
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.5</version>
+			<version>${log4j2.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.5</version>
+			<version>${log4j2.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.1.0.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.1.0.Final</version>
+			<version>${hibernate.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-api</artifactId>
-			<version>2.2.10</version>
+			<version>${jsf.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.sun.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
-			<version>2.2.10</version>
+			<version>${jsf.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${jstl.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
+			<version>${javax.servlet.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
-			<version>4.2.2.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
-			<version>1.11.0.RELEASE</version>
+			<version>${spring.data.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.6</version>
+			<version>${mysql.version}</version>
 		</dependency>
 
 		<dependency>
-    		<groupId>org.apache.commons</groupId>
-    		<artifactId>commons-collections4</artifactId>
-    		<version>4.1</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>${apache.commons.version}</version>
 		</dependency>
 
 	</dependencies>
@@ -147,7 +196,7 @@
 				<version>9.2.11.v20150529</version>
 				<configuration>
 					<httpConnector>
-						<port>9091</port>
+						<port>${jetty.port}</port>
 					</httpConnector>
 				</configuration>
 			</plugin>
