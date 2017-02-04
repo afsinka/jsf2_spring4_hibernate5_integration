@@ -19,5 +19,6 @@
 		</Root>
 		<Logger name="org.hibernate" level="ERROR" />
 		<Logger name="org.hibernate.SQL" level="ERROR" />
+		<Logger name="org.springframework" level="INFO" />
 	</Loggers>
 </Configuration>
