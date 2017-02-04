@@ -17,7 +17,7 @@
 		<Root level="DEBUG">
 			<AppenderRef ref="File" />
 		</Root>
-		<Logger name="org.hibernate" level="info" />
-		<Logger name="org.hibernate.SQL" level="debug" />
+		<Logger name="org.hibernate" level="ERROR" />
+		<Logger name="org.hibernate.SQL" level="ERROR" />
 	</Loggers>
 </Configuration>

@@ -60,7 +60,7 @@ public class AppConfig {
 	private Map<String, Object> getJpaPropertyMap() {
 		final Map<String, Object> jpaPropertyMap = new HashMap<>();
 		jpaPropertyMap.put("hibernate.hbm2ddl.auto", "update");
-		jpaPropertyMap.put("hibernate.show_sql", true);
+		jpaPropertyMap.put("hibernate.show_sql", false);
 		jpaPropertyMap.put("hibernate.format_sql", true);
 		jpaPropertyMap.put("hibernate.generate_statistics", false);
 		jpaPropertyMap.put("hibernate.max_fetch_depth", 0);
